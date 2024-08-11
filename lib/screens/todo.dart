@@ -1,4 +1,4 @@
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,20 +7,20 @@ class todo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..gettodolist();
-
-    return Scaffold(
-     
-      appBar: AppBar(
-        title: Text("Todo List"),
+    final controller = Get.put(apiController())..gettododata();
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text("Todo List"),
+        ),
+        body: ListView.builder(
+            itemCount: controller.todoList.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(controller.todoList[index].todo),
+              );
+            }),
       ),
-      body: ListView.builder(
-          itemCount: controller.todoList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text("${controller.todoList[index].todo}"),
-            );
-          }),
     );
   }
 }

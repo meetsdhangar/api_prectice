@@ -1,6 +1,6 @@
 import 'package:api/Models/personmodel.dart';
 
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class users extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..getusers();
+    final controller = Get.put(apiController())..getusers();
     return Obx(
       () => controller.userslist.length == 0
           ? Scaffold(

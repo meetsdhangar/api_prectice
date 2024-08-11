@@ -10,19 +10,16 @@ import 'package:api/Models/todomodel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class todocontroler extends GetxController {
+class apiController extends GetxController {
   RxList todoList = [].obs;
-  gettodolist() async {
-    var api = "https://dummyjson.com/todos";
-    var response = await http.get(Uri.parse(api));
-    var maindata = jsonDecode(response.body);
-    var tododata = maindata['todos'];
-    print(tododata);
-    var mylist = tododata.map((e) => Todo.fromJson(e)).toList();
+  gettododata() async {
+    var api = 'https://dummyjson.com/todos';
+    var responce = await http.get(Uri.parse(api));
+    var data = jsonDecode(responce.body);
+    var dadain = data['todos'];
+    var list = dadain.map((m) => Todo.fromMap(m)).toList();
     todoList.clear();
-    todoList.addAll(mylist);
-
-    // print(mylist);
+    todoList.addAll(list);
   }
 
   RxList commentslist = [].obs;

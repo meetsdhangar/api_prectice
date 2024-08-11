@@ -1,4 +1,4 @@
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..getproductlist();
+    final controller = Get.put(apiController())..getproductlist();
     return Obx(
       () => controller.Productslist.length == 0
           ? Scaffold(

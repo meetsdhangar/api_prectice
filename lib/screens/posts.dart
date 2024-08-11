@@ -1,5 +1,5 @@
 import 'package:api/Models/postsmodel.dart';
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ class posts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..getposts();
+    final controller = Get.put(apiController())..getposts();
     return Obx(
       () => controller.postslist.length == 0
           ? Scaffold(

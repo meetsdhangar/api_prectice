@@ -1,5 +1,5 @@
 import 'package:api/Models/commentsmodel.dart';
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..getcommentlist();
+    final controller = Get.put(apiController());
     return Obx(
       () => Scaffold(
         appBar: AppBar(

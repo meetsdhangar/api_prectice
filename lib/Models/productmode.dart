@@ -40,7 +40,7 @@ class Product {
     int id;
     String title;
     String description;
-    int price;
+    double price;
     double discountPercentage;
     double rating;
     int stock;

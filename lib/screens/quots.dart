@@ -1,4 +1,4 @@
-import 'package:api/controller/todocontroler.dart';
+import 'package:api/controller/apiController.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,7 +9,7 @@ class quots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(todocontroler())..getquotslist();
+    final controller = Get.put(apiController())..getquotslist();
     return Obx(
       () => controller.quotslist.length == 0
           ? Scaffold(
