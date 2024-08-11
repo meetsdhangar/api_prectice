@@ -56,7 +56,7 @@ class apiController extends GetxController {
     var maindata = jsonDecode(response.body);
     var productdata = maindata['products'];
     print(productdata);
-    var mylist = productdata.map((p) => Product.fromJson(p)).toList();
+    var mylist = productdata.map((p) => Product.fromMap(p)).toList();
     print(mylist);
     Productslist.clear();
     Productslist.addAll(mylist);
@@ -68,7 +68,7 @@ class apiController extends GetxController {
     var response = await http.get(Uri.parse(api));
     var maindata = jsonDecode(response.body);
     var userdata = maindata['users'];
-    var mylist = userdata.map((u) => PersonModel.fromJson(u)).toList();
+    var mylist = userdata.map((u) => PersonModel.fromMap(u)).toList();
     print(mylist);
     userslist.clear();
     userslist.addAll(mylist);
@@ -81,7 +81,7 @@ class apiController extends GetxController {
     var maindata = jsonDecode(response.body);
     var userdata = maindata['posts'];
 
-    var mylist = userdata.map((a) => Post.fromJson(a)).toList();
+    var mylist = userdata.map((a) => Post.fromMap(a)).toList();
     postslist.clear();
     postslist.addAll(mylist);
   }

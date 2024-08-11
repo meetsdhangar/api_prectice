@@ -1,261 +1,337 @@
-// To parse this JSON data, do
-//
-//     final personModel = personModelFromJson(jsonString);
-
-import 'dart:convert';
-
-PersonModel personModelFromJson(String str) => PersonModel.fromJson(json.decode(str));
-
-String personModelToJson(PersonModel data) => json.encode(data.toJson());
 
 class PersonModel {
-    int id;
-    String firstName;
-    String lastName;
-    String maidenName;
-    int age;
-    String gender;
-    String email;
-    String phone;
-    String username;
-    String password;
-    DateTime birthDate;
-    String image;
-    String bloodGroup;
-    int height;
-    double weight;
-    String eyeColor;
-    Hair hair;
-    String domain;
-    String ip;
-    Address address;
-    String macAddress;
-    String university;
-    Bank bank;
-    Company company;
-    String ein;
-    String ssn;
-    String userAgent;
+  int id;
+  String firstName;
+  String lastName;
+  String maidenName;
+  int age;
+  Gender gender;
+  String email;
+  String phone;
+  String username;
+  String password;
+  String birthDate;
+  String image;
+  String bloodGroup;
+  double height;
+  double weight;
+  String eyeColor;
+  Hair hair;
+  String ip;
+  Address address;
+  String macAddress;
+  String university;
+  Bank bank;
+  Company company;
+  String ein;
+  String ssn;
+  String userAgent;
+  Crypto crypto;
+  Role role;
 
-    PersonModel({
-        required this.id,
-        required this.firstName,
-        required this.lastName,
-        required this.maidenName,
-        required this.age,
-        required this.gender,
-        required this.email,
-        required this.phone,
-        required this.username,
-        required this.password,
-        required this.birthDate,
-        required this.image,
-        required this.bloodGroup,
-        required this.height,
-        required this.weight,
-        required this.eyeColor,
-        required this.hair,
-        required this.domain,
-        required this.ip,
-        required this.address,
-        required this.macAddress,
-        required this.university,
-        required this.bank,
-        required this.company,
-        required this.ein,
-        required this.ssn,
-        required this.userAgent,
-    });
+  PersonModel({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.maidenName,
+    required this.age,
+    required this.gender,
+    required this.email,
+    required this.phone,
+    required this.username,
+    required this.password,
+    required this.birthDate,
+    required this.image,
+    required this.bloodGroup,
+    required this.height,
+    required this.weight,
+    required this.eyeColor,
+    required this.hair,
+    required this.ip,
+    required this.address,
+    required this.macAddress,
+    required this.university,
+    required this.bank,
+    required this.company,
+    required this.ein,
+    required this.ssn,
+    required this.userAgent,
+    required this.crypto,
+    required this.role,
+  });
 
-    factory PersonModel.fromJson(Map<String, dynamic> json) => PersonModel(
+  factory PersonModel.fromMap(Map<String, dynamic> json) => PersonModel(
         id: json["id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
         maidenName: json["maidenName"],
         age: json["age"],
-        gender: json["gender"],
+        gender: genderValues.map[json["gender"]]!,
         email: json["email"],
         phone: json["phone"],
         username: json["username"],
         password: json["password"],
-        birthDate: DateTime.parse(json["birthDate"]),
+        birthDate: json["birthDate"],
         image: json["image"],
         bloodGroup: json["bloodGroup"],
-        height: json["height"],
+        height: json["height"]?.toDouble(),
         weight: json["weight"]?.toDouble(),
         eyeColor: json["eyeColor"],
-        hair: Hair.fromJson(json["hair"]),
-        domain: json["domain"],
+        hair: Hair.fromMap(json["hair"]),
         ip: json["ip"],
-        address: Address.fromJson(json["address"]),
+        address: Address.fromMap(json["address"]),
         macAddress: json["macAddress"],
         university: json["university"],
-        bank: Bank.fromJson(json["bank"]),
-        company: Company.fromJson(json["company"]),
+        bank: Bank.fromMap(json["bank"]),
+        company: Company.fromMap(json["company"]),
         ein: json["ein"],
         ssn: json["ssn"],
         userAgent: json["userAgent"],
-    );
+        crypto: Crypto.fromMap(json["crypto"]),
+        role: roleValues.map[json["role"]]!,
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "id": id,
         "firstName": firstName,
         "lastName": lastName,
         "maidenName": maidenName,
         "age": age,
-        "gender": gender,
+        "gender": genderValues.reverse[gender],
         "email": email,
         "phone": phone,
         "username": username,
         "password": password,
-        "birthDate": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
+        "birthDate": birthDate,
         "image": image,
         "bloodGroup": bloodGroup,
         "height": height,
         "weight": weight,
         "eyeColor": eyeColor,
-        "hair": hair.toJson(),
-        "domain": domain,
+        "hair": hair.toMap(),
         "ip": ip,
-        "address": address.toJson(),
+        "address": address.toMap(),
         "macAddress": macAddress,
         "university": university,
-        "bank": bank.toJson(),
-        "company": company.toJson(),
+        "bank": bank.toMap(),
+        "company": company.toMap(),
         "ein": ein,
         "ssn": ssn,
         "userAgent": userAgent,
-    };
+        "crypto": crypto.toMap(),
+        "role": roleValues.reverse[role],
+      };
 }
 
 class Address {
-    String address;
-    String? city;
-    Coordinates coordinates;
-    String postalCode;
-    String state;
+  String address;
+  String city;
+  String state;
+  String stateCode;
+  String postalCode;
+  Coordinates coordinates;
+  Country country;
 
-    Address({
-        required this.address,
-        this.city,
-        required this.coordinates,
-        required this.postalCode,
-        required this.state,
-    });
+  Address({
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.stateCode,
+    required this.postalCode,
+    required this.coordinates,
+    required this.country,
+  });
 
-    factory Address.fromJson(Map<String, dynamic> json) => Address(
+  factory Address.fromMap(Map<String, dynamic> json) => Address(
         address: json["address"],
         city: json["city"],
-        coordinates: Coordinates.fromJson(json["coordinates"]),
-        postalCode: json["postalCode"],
         state: json["state"],
-    );
+        stateCode: json["stateCode"],
+        postalCode: json["postalCode"],
+        coordinates: Coordinates.fromMap(json["coordinates"]),
+        country: countryValues.map[json["country"]]!,
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "address": address,
         "city": city,
-        "coordinates": coordinates.toJson(),
-        "postalCode": postalCode,
         "state": state,
-    };
+        "stateCode": stateCode,
+        "postalCode": postalCode,
+        "coordinates": coordinates.toMap(),
+        "country": countryValues.reverse[country],
+      };
 }
 
 class Coordinates {
-    double lat;
-    double lng;
+  double lat;
+  double lng;
 
-    Coordinates({
-        required this.lat,
-        required this.lng,
-    });
+  Coordinates({
+    required this.lat,
+    required this.lng,
+  });
 
-    factory Coordinates.fromJson(Map<String, dynamic> json) => Coordinates(
+  factory Coordinates.fromMap(Map<String, dynamic> json) => Coordinates(
         lat: json["lat"]?.toDouble(),
         lng: json["lng"]?.toDouble(),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "lat": lat,
         "lng": lng,
-    };
+      };
 }
 
+enum Country { UNITED_STATES }
+
+final countryValues = EnumValues({"United States": Country.UNITED_STATES});
+
 class Bank {
-    String cardExpire;
-    String cardNumber;
-    String cardType;
-    String currency;
-    String iban;
+  String cardExpire;
+  String cardNumber;
+  String cardType;
+  String currency;
+  String iban;
 
-    Bank({
-        required this.cardExpire,
-        required this.cardNumber,
-        required this.cardType,
-        required this.currency,
-        required this.iban,
-    });
+  Bank({
+    required this.cardExpire,
+    required this.cardNumber,
+    required this.cardType,
+    required this.currency,
+    required this.iban,
+  });
 
-    factory Bank.fromJson(Map<String, dynamic> json) => Bank(
+  factory Bank.fromMap(Map<String, dynamic> json) => Bank(
         cardExpire: json["cardExpire"],
         cardNumber: json["cardNumber"],
         cardType: json["cardType"],
         currency: json["currency"],
         iban: json["iban"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "cardExpire": cardExpire,
         "cardNumber": cardNumber,
         "cardType": cardType,
         "currency": currency,
         "iban": iban,
-    };
+      };
 }
 
 class Company {
-    Address address;
-    String department;
-    String name;
-    String title;
+  String department;
+  String name;
+  String title;
+  Address address;
 
-    Company({
-        required this.address,
-        required this.department,
-        required this.name,
-        required this.title,
-    });
+  Company({
+    required this.department,
+    required this.name,
+    required this.title,
+    required this.address,
+  });
 
-    factory Company.fromJson(Map<String, dynamic> json) => Company(
-        address: Address.fromJson(json["address"]),
+  factory Company.fromMap(Map<String, dynamic> json) => Company(
         department: json["department"],
         name: json["name"],
         title: json["title"],
-    );
+        address: Address.fromMap(json["address"]),
+      );
 
-    Map<String, dynamic> toJson() => {
-        "address": address.toJson(),
+  Map<String, dynamic> toMap() => {
         "department": department,
         "name": name,
         "title": title,
-    };
+        "address": address.toMap(),
+      };
 }
 
+class Crypto {
+  Coin coin;
+  Wallet wallet;
+  Network network;
+
+  Crypto({
+    required this.coin,
+    required this.wallet,
+    required this.network,
+  });
+
+  factory Crypto.fromMap(Map<String, dynamic> json) => Crypto(
+        coin: coinValues.map[json["coin"]]!,
+        wallet: walletValues.map[json["wallet"]]!,
+        network: networkValues.map[json["network"]]!,
+      );
+
+  Map<String, dynamic> toMap() => {
+        "coin": coinValues.reverse[coin],
+        "wallet": walletValues.reverse[wallet],
+        "network": networkValues.reverse[network],
+      };
+}
+
+enum Coin { BITCOIN }
+
+final coinValues = EnumValues({"Bitcoin": Coin.BITCOIN});
+
+enum Network { ETHEREUM_ERC20 }
+
+final networkValues = EnumValues({"Ethereum (ERC20)": Network.ETHEREUM_ERC20});
+
+enum Wallet { THE_0_XB9_FC2_FE63_B2_A6_C003_F1_C324_C3_BFA53259162181_A }
+
+final walletValues = EnumValues({
+  "0xb9fc2fe63b2a6c003f1c324c3bfa53259162181a":
+      Wallet.THE_0_XB9_FC2_FE63_B2_A6_C003_F1_C324_C3_BFA53259162181_A
+});
+
+enum Gender { FEMALE, MALE }
+
+final genderValues = EnumValues({"female": Gender.FEMALE, "male": Gender.MALE});
+
 class Hair {
-    String color;
-    String type;
+  String color;
+  Type type;
 
-    Hair({
-        required this.color,
-        required this.type,
-    });
+  Hair({
+    required this.color,
+    required this.type,
+  });
 
-    factory Hair.fromJson(Map<String, dynamic> json) => Hair(
+  factory Hair.fromMap(Map<String, dynamic> json) => Hair(
         color: json["color"],
-        type: json["type"],
-    );
+        type: typeValues.map[json["type"]]!,
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "color": color,
-        "type": type,
-    };
+        "type": typeValues.reverse[type],
+      };
+}
+
+enum Type { CURLY, KINKY, STRAIGHT, WAVY }
+
+final typeValues = EnumValues({
+  "Curly": Type.CURLY,
+  "Kinky": Type.KINKY,
+  "Straight": Type.STRAIGHT,
+  "Wavy": Type.WAVY
+});
+
+enum Role { ADMIN, MODERATOR, USER }
+
+final roleValues = EnumValues(
+    {"admin": Role.ADMIN, "moderator": Role.MODERATOR, "user": Role.USER});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

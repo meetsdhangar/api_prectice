@@ -142,7 +142,7 @@ class inner extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Text("Domain:-${person.domain}"),
+              // Text("Domain:-${person.domain}"),
               SizedBox(
                 height: 5,
               ),

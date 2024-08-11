@@ -1,35 +1,35 @@
 // To parse this JSON data, do
 //
-//     final postsModel = postsModelFromJson(jsonString);
+//     final postModel = postModelFromMap(jsonString);
 
 import 'dart:convert';
 
-PostsModel postsModelFromJson(String str) => PostsModel.fromJson(json.decode(str));
+PostModel postModelFromMap(String str) => PostModel.fromMap(json.decode(str));
 
-String postsModelToJson(PostsModel data) => json.encode(data.toJson());
+String postModelToMap(PostModel data) => json.encode(data.toMap());
 
-class PostsModel {
+class PostModel {
     List<Post> posts;
     int total;
     int skip;
     int limit;
 
-    PostsModel({
+    PostModel({
         required this.posts,
         required this.total,
         required this.skip,
         required this.limit,
     });
 
-    factory PostsModel.fromJson(Map<String, dynamic> json) => PostsModel(
-        posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
+    factory PostModel.fromMap(Map<String, dynamic> json) => PostModel(
+        posts: List<Post>.from(json["posts"].map((x) => Post.fromMap(x))),
         total: json["total"],
         skip: json["skip"],
         limit: json["limit"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
+    Map<String, dynamic> toMap() => {
+        "posts": List<dynamic>.from(posts.map((x) => x.toMap())),
         "total": total,
         "skip": skip,
         "limit": limit,
@@ -40,34 +40,58 @@ class Post {
     int id;
     String title;
     String body;
-    int userId;
     List<String> tags;
-    int reactions;
+    Reactions reactions;
+    int views;
+    int userId;
 
     Post({
         required this.id,
         required this.title,
         required this.body,
-        required this.userId,
         required this.tags,
         required this.reactions,
+        required this.views,
+        required this.userId,
     });
 
-    factory Post.fromJson(Map<String, dynamic> json) => Post(
+    factory Post.fromMap(Map<String, dynamic> json) => Post(
         id: json["id"],
         title: json["title"],
         body: json["body"],
-        userId: json["userId"],
         tags: List<String>.from(json["tags"].map((x) => x)),
-        reactions: json["reactions"],
+        reactions: Reactions.fromMap(json["reactions"]),
+        views: json["views"],
+        userId: json["userId"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "id": id,
         "title": title,
         "body": body,
-        "userId": userId,
         "tags": List<dynamic>.from(tags.map((x) => x)),
-        "reactions": reactions,
+        "reactions": reactions.toMap(),
+        "views": views,
+        "userId": userId,
+    };
+}
+
+class Reactions {
+    int likes;
+    int dislikes;
+
+    Reactions({
+        required this.likes,
+        required this.dislikes,
+    });
+
+    factory Reactions.fromMap(Map<String, dynamic> json) => Reactions(
+        likes: json["likes"],
+        dislikes: json["dislikes"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "likes": likes,
+        "dislikes": dislikes,
     };
 }

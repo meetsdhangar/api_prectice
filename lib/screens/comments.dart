@@ -1,63 +1,64 @@
-import 'package:api/Models/commentsmodel.dart';
-import 'package:api/controller/apiController.dart';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
-class comments extends StatelessWidget {
-  const comments({super.key});
+import 'package:api/controller/apiController.dart';
+
+import '../Models/commentsmodel.dart';
+
+class CommentScreen extends StatelessWidget {
+  const CommentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(apiController());
+    final controlller = Get.put(apiController())..getcommentlist();
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text("Comments List"),
+          centerTitle: true,
+          title: Text("Comment Data"),
         ),
-        body: ListView.builder(
-            itemCount: controller.commentslist.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Text("${controller.commentslist[index].id}"),
-                title: Text("${controller.commentslist[index].body}"),
-                trailing: TextButton(
-                    onPressed: () {
-                      Get.to(InnerData(
-                        mycomment: controller.commentslist[index],
-                        mystring: "asdf",
-                      ));
-                    },
-                    child: Text("Enter")),
-              );
-            }),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controlller.commentslist.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(controlller.commentslist[index].body),
+                    trailing: TextButton(
+                        onPressed: () {
+                          Get.to(() => InDataScreen(
+                                cmd: controlller.commentslist[index],
+                              ));
+                        },
+                        child: Text("Details")),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class InnerData extends StatelessWidget {
-  final String mystring;
-  final CommentModel mycomment;
-  const InnerData({super.key, required this.mycomment, required this.mystring});
+class InDataScreen extends StatelessWidget {
+  final CommentModel cmd;
+  const InDataScreen({super.key, required this.cmd});
 
   @override
   Widget build(BuildContext context) {
-    print(mycomment);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('id = ${mycomment.id}'),
-            Text('Title: ${mycomment.body}'),
-            Text('User Info'),
-            Text('Username: ${mycomment.user.username}'),
-            Text("Mystring:  ${mystring}")
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("In Data"),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Text(cmd.body), Text(cmd.postId.toString())],
       ),
     );
   }
